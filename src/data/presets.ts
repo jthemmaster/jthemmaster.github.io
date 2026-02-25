@@ -135,6 +135,8 @@ export function generatePreset(
 
   const atoms: Atom[] = []
   let atomId = 0
+  const placedCenters: Vec3[] = []
+  const MIN_MOL_DISTANCE = 2.5 // Å - minimum distance between molecule centers
 
   // Place each molecule
   for (const mol of preset.molecules) {
@@ -142,8 +144,22 @@ export function generatePreset(
     if (!template) continue
 
     for (let i = 0; i < mol.count; i++) {
-      // Random center position for the molecule (leave margin for atoms)
-      const center = randomInSphere(reactorRadius * 0.7)
+      // Random center position with rejection sampling to avoid overlaps
+      let center: Vec3
+      let attempts = 0
+      do {
+        center = randomInSphere(reactorRadius * 0.65)
+        attempts++
+        if (attempts > 200) break // Give up after many attempts
+      } while (
+        placedCenters.some((c) => {
+          const dx = c[0] - center[0]
+          const dy = c[1] - center[1]
+          const dz = c[2] - center[2]
+          return Math.sqrt(dx * dx + dy * dy + dz * dz) < MIN_MOL_DISTANCE
+        })
+      )
+      placedCenters.push(center)
 
       // Random rotation (simple: pick random axis and angle)
       const angle = Math.random() * Math.PI * 2

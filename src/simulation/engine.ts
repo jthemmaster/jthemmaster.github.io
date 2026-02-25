@@ -4,7 +4,7 @@ import { computeSoftConfinement } from './confinement'
 import { integratePositions, integrateVelocities } from './integrator'
 import { detectBonds, detectSpecies } from './bonds'
 import { calculateTemperature, applyBerendsenThermostat, removeCOMVelocity } from './thermostat'
-import { zero, addMut } from '../lib/vec3'
+import { zero, addMut, lengthSq } from '../lib/vec3'
 
 export interface StepResult {
   atoms: Atom[]
@@ -44,6 +44,38 @@ export class SimulationEngine {
 
     // Compute initial forces
     this.computeForces()
+
+    // Run relaxation phase: small timestep with aggressive thermostat
+    this.relax()
+  }
+
+  /**
+   * Relaxation phase at initialization.
+   * Runs a few steps with a smaller timestep and aggressive velocity capping
+   * to gently resolve any initial overlaps.
+   */
+  private relax(): void {
+    const savedDt = this.config.dt
+    const savedTau = this.config.thermostatTau
+    this.config.dt = 0.1 // Very small timestep
+    this.config.thermostatTau = 10 // Very aggressive thermostat
+
+    for (let i = 0; i < 100; i++) {
+      const oldForces: Vec3[] = this.atoms.map((a) => [...a.force] as Vec3)
+      integratePositions(this.atoms, this.config.dt)
+      this.computeForces()
+      integrateVelocities(this.atoms, oldForces, this.config.dt)
+      this.capVelocities()
+      const { temperature } = calculateTemperature(this.atoms)
+      applyBerendsenThermostat(this.atoms, this.config.targetTemp, temperature, this.config.dt, this.config.thermostatTau)
+    }
+
+    // Restore original config
+    this.config.dt = savedDt
+    this.config.thermostatTau = savedTau
+
+    // Remove any accumulated COM drift
+    removeCOMVelocity(this.atoms)
   }
 
   updateConfig(config: Partial<SimConfig>): void {
@@ -72,18 +104,21 @@ export class SimulationEngine {
     // 3. Update velocities: v(t+dt) = v(t) + 0.5*(a_old + a_new)*dt
     integrateVelocities(this.atoms, oldForces, dt)
 
-    // 4. Calculate temperature and apply thermostat
+    // 4. Cap velocities to prevent numerical instability
+    this.capVelocities()
+
+    // 5. Calculate temperature and apply thermostat
     const { temperature, kineticEnergy } = calculateTemperature(this.atoms)
 
     if (targetTemp > 0 && thermostatTau > 0) {
       applyBerendsenThermostat(this.atoms, targetTemp, temperature, dt, thermostatTau)
     }
 
-    // 5. Detect bonds and species
+    // 6. Detect bonds and species
     const bonds = detectBonds(this.atoms)
     const species = detectSpecies(this.atoms, bonds)
 
-    // 6. Update counters
+    // 7. Update counters
     this.step++
     this.time += dt
 
@@ -100,6 +135,20 @@ export class SimulationEngine {
       totalEnergy: finalThermo.kineticEnergy + potentialEnergy,
       step: this.step,
       time: this.time,
+    }
+  }
+
+  /**
+   * Cap atom velocities to prevent numerical instability.
+   * Max velocity is set to prevent atoms from moving more than ~0.3 Å per step.
+   */
+  private capVelocities(): void {
+    const maxVelComponent = 0.3 / this.config.dt // Å/fs - max ~0.3 Å per step
+    for (const atom of this.atoms) {
+      for (let d = 0; d < 3; d++) {
+        if (atom.velocity[d] > maxVelComponent) atom.velocity[d] = maxVelComponent
+        if (atom.velocity[d] < -maxVelComponent) atom.velocity[d] = -maxVelComponent
+      }
     }
   }
 

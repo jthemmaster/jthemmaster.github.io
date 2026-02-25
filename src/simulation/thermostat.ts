@@ -52,8 +52,10 @@ export function applyBerendsenThermostat(
   const ratio = targetTemp / currentTemp
   let lambda = Math.sqrt(1 + (dt / tau) * (ratio - 1))
 
-  // Clamp lambda to prevent instability
-  lambda = Math.max(0.9, Math.min(1.1, lambda))
+  // Clamp lambda — allow stronger coupling when temperature deviates significantly
+  const maxLambda = ratio > 3 || ratio < 0.33 ? 1.5 : 1.1
+  const minLambda = ratio > 3 || ratio < 0.33 ? 0.5 : 0.9
+  lambda = Math.max(minLambda, Math.min(maxLambda, lambda))
 
   for (const atom of atoms) {
     scaleMut(atom.velocity, lambda)
