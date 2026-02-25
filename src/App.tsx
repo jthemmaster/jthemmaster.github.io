@@ -53,14 +53,17 @@ function App() {
   }, [isRunning, isInitialized, start, stop, singleStep, reset])
 
   return (
-    <div className="w-full h-full flex flex-col bg-bg-primary">
+    <div className="w-full h-full flex flex-col bg-bg-primary relative">
+      {/* Subtle mesh gradient background */}
+      <div className="mesh-gradient" />
+
       {/* Main content area */}
-      <div className="flex-1 flex min-h-0">
+      <div className="flex-1 flex min-h-0 relative z-10">
         {/* Left sidebar */}
         <Sidebar />
 
         {/* Center: 3D viewer */}
-        <main className="flex-1 min-w-0">
+        <main className="flex-1 min-w-0 relative">
           <MolecularViewer />
         </main>
 

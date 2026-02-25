@@ -1,4 +1,4 @@
-import { Play, Pause, RotateCcw, SkipForward } from 'lucide-react'
+import { Play, Pause, RotateCcw, SkipForward, Zap } from 'lucide-react'
 import { useSimulationStore } from '../../stores/simulationStore'
 import Button from '../ui/Button'
 
@@ -11,53 +11,53 @@ export default function SimulationControls() {
   const reset = useSimulationStore((s) => s.reset)
 
   return (
-    <div className="space-y-2">
-      <div className="text-xs font-medium text-text-secondary uppercase tracking-wider px-1">
-        Simulation
-      </div>
-      <div className="flex items-center gap-2">
-        {/* Play / Pause */}
-        <Button
-          variant={isRunning ? 'primary' : 'secondary'}
-          size="md"
-          className="flex-1"
-          onClick={isRunning ? stop : start}
-          disabled={!isInitialized}
-          glow={isRunning}
-        >
-          {isRunning ? (
-            <>
-              <Pause size={14} />
-              <span>Pause</span>
-            </>
-          ) : (
-            <>
-              <Play size={14} />
-              <span>Run</span>
-            </>
-          )}
-        </Button>
+    <div className="space-y-3">
+      {/* Main play/pause button */}
+      <Button
+        variant={isRunning ? 'primary' : 'secondary'}
+        size="lg"
+        className="w-full"
+        onClick={isRunning ? stop : start}
+        disabled={!isInitialized}
+        glow={isRunning}
+      >
+        {isRunning ? (
+          <>
+            <Pause size={16} />
+            <span className="font-semibold">Pause Simulation</span>
+          </>
+        ) : (
+          <>
+            <Play size={16} />
+            <span className="font-semibold">Run Simulation</span>
+          </>
+        )}
+      </Button>
 
-        {/* Step */}
+      {/* Secondary controls */}
+      <div className="flex items-center gap-2">
         <Button
-          variant="icon"
-          size="md"
+          variant="secondary"
+          size="sm"
+          className="flex-1"
           onClick={singleStep}
           disabled={!isInitialized || isRunning}
           title="Single Step (S)"
         >
-          <SkipForward size={14} />
+          <SkipForward size={12} />
+          <span>Step</span>
         </Button>
 
-        {/* Reset */}
         <Button
-          variant="icon"
-          size="md"
+          variant="secondary"
+          size="sm"
+          className="flex-1"
           onClick={reset}
           disabled={!isInitialized}
           title="Reset (R)"
         >
-          <RotateCcw size={14} />
+          <RotateCcw size={12} />
+          <span>Reset</span>
         </Button>
       </div>
     </div>

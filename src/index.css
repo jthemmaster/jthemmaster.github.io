@@ -114,6 +114,38 @@ html, body, #root {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+/* Subtle mesh gradient background */
+.mesh-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(99, 102, 241, 0.02) 0%, transparent 50%);
+}
+
+/* Section transition */
+.section-enter {
+  animation: sectionFadeIn 0.3s ease-out;
+}
+
+@keyframes sectionFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Number transition */
+@keyframes countUp {
+  from { opacity: 0.5; transform: translateY(-2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.num-update {
+  animation: countUp 0.15s ease-out;
+}
+
 /* Smooth number transition */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
