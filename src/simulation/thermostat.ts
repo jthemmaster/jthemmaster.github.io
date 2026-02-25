@@ -4,8 +4,9 @@ import { lengthSq, scaleMut } from '../lib/vec3'
 // Boltzmann constant in eV/K
 const KB = 8.617333262e-5
 
-// Conversion factor: 1 amu = 1.0364e-4 eV·fs²/Å²
-const AMU_TO_INTERNAL = 1.0364e-4
+// Conversion factor: 1 amu = 103.6428 eV·fs²/Å²
+// Derived from: 1 amu = 1.66054e-27 kg, 1 eV·fs²/Å² = 1.60218e-29 kg
+const AMU_TO_INTERNAL = 103.6428
 
 /**
  * Calculate instantaneous temperature from kinetic energies.

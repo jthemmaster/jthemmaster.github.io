@@ -66,9 +66,10 @@ export function randomVelocity(temperature: number, mass: number): Vec3 {
   // Maxwell-Boltzmann distribution
   // k_B = 8.617e-5 eV/K, mass in amu
   // v_rms = sqrt(k_B * T / m) in Å/fs
+  // mass in internal units: mass_amu * 103.6428 eV·fs²/Å²
   const kB = 8.617e-5 // eV/K
-  const amu_to_eV_fs2_per_A2 = 1.0364e-4 // conversion: 1 amu = 1.0364e-4 eV·fs²/Å²
-  const sigma = Math.sqrt(kB * temperature / (mass * amu_to_eV_fs2_per_A2))
+  const AMU_TO_INTERNAL = 103.6428
+  const sigma = Math.sqrt(kB * temperature / (mass * AMU_TO_INTERNAL))
 
   // Box-Muller transform for normal distribution
   const u1 = Math.random()

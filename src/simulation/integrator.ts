@@ -1,7 +1,10 @@
 import type { Atom } from './types'
 
-// Conversion factor: 1 amu = 1.0364e-4 eV·fs²/Å²
-const AMU_TO_INTERNAL = 1.0364e-4
+// Conversion factor: 1 amu in eV·fs²/Å²
+// 1 amu = 1.66054e-27 kg
+// 1 eV·fs²/Å² = 1.60218e-19 J · (1e-15 s)² / (1e-10 m)² = 1.60218e-29 kg
+// 1 amu = 1.66054e-27 / 1.60218e-29 = 103.6 eV·fs²/Å²
+const AMU_TO_INTERNAL = 103.6428
 
 /**
  * Velocity Verlet integrator - Position update step.
