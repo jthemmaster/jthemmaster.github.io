@@ -3,6 +3,7 @@ import SceneSetup from './SceneSetup'
 import Atoms from './Atoms'
 import Bonds from './Bonds'
 import ConfinementSphere from './ConfinementSphere'
+import CanvasErrorBoundary from './CanvasErrorBoundary'
 import { useSimulationStore } from '../../stores/simulationStore'
 import Badge from '../ui/Badge'
 import Logo from '../ui/Logo'
@@ -17,6 +18,7 @@ export default function MolecularViewer() {
   return (
     <div className="relative w-full h-full overflow-hidden">
       {/* 3D Canvas */}
+      <CanvasErrorBoundary>
       <Canvas
         camera={{
           position: [15, 10, 15],
@@ -38,6 +40,7 @@ export default function MolecularViewer() {
           </>
         )}
       </Canvas>
+      </CanvasErrorBoundary>
 
       {/* Top-left: step counter */}
       {isInitialized && step > 0 && (

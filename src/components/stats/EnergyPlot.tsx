@@ -76,6 +76,8 @@ export default function EnergyPlot() {
                 stroke="transparent"
                 tickLine={false}
                 axisLine={false}
+                interval="preserveStartEnd"
+                tickCount={5}
               />
               <YAxis
                 tick={{ fontSize: 9, fill: '#52525B' }}

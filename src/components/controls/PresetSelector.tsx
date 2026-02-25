@@ -1,50 +1,50 @@
 import { useSimulationStore } from '../../stores/simulationStore'
 import { PRESETS } from '../../data/presets'
-import GlassCard from '../ui/GlassCard'
 
 export default function PresetSelector() {
   const selectedPreset = useSimulationStore((s) => s.selectedPreset)
   const setPreset = useSimulationStore((s) => s.setPreset)
 
   return (
-    <div className="space-y-2">
-      <div className="text-xs font-medium text-text-secondary uppercase tracking-wider px-1">
-        Preset System
-      </div>
-      <div className="space-y-1">
-        {PRESETS.map((preset) => (
-          <GlassCard
+    <div className="space-y-1.5">
+      {PRESETS.map((preset) => {
+        const isSelected = selectedPreset === preset.id
+
+        return (
+          <button
             key={preset.id}
-            padding="sm"
-            hover
+            onClick={() => setPreset(preset.id)}
             className={`
-              cursor-pointer transition-all duration-200
-              ${
-                selectedPreset === preset.id
-                  ? 'border-accent-purple/40 bg-accent-purple/[0.08] shadow-[0_0_12px_rgba(139,92,246,0.1)]'
-                  : ''
+              w-full text-left px-3 py-2.5 rounded-xl transition-all duration-200
+              relative overflow-hidden group
+              ${isSelected
+                ? 'bg-accent-purple/[0.1] border border-accent-purple/30 shadow-[0_0_16px_rgba(139,92,246,0.08)]'
+                : 'glass glass-hover border border-transparent'
               }
             `}
           >
-            <button
-              onClick={() => setPreset(preset.id)}
-              className="w-full text-left"
-            >
-              <div className="flex items-center gap-2">
-                <span className="text-base">{preset.emoji}</span>
-                <div className="min-w-0">
-                  <div className="text-xs font-medium text-text-primary truncate">
-                    {preset.name}
-                  </div>
-                  <div className="text-[10px] text-text-muted truncate">
-                    {preset.description}
-                  </div>
+            {/* Left accent bar for selected */}
+            {isSelected && (
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-[60%] rounded-r-full bg-gradient-to-b from-accent-purple to-accent-blue" />
+            )}
+
+            <div className="flex items-center gap-2.5">
+              <span className="text-base flex-shrink-0">{preset.emoji}</span>
+              <div className="min-w-0 flex-1">
+                <div className={`text-xs font-medium truncate ${isSelected ? 'text-text-primary' : 'text-text-secondary group-hover:text-text-primary'} transition-colors`}>
+                  {preset.name}
+                </div>
+                <div className="text-[10px] text-text-muted truncate mt-0.5 leading-tight">
+                  {preset.description}
                 </div>
               </div>
-            </button>
-          </GlassCard>
-        ))}
-      </div>
+              {isSelected && (
+                <div className="w-1.5 h-1.5 rounded-full bg-accent-purple flex-shrink-0" />
+              )}
+            </div>
+          </button>
+        )
+      })}
     </div>
   )
 }
