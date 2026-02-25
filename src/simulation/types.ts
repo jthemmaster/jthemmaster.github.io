@@ -58,8 +58,8 @@ export interface SimConfig {
 export const DEFAULT_CONFIG: SimConfig = {
   dt: 0.5,
   targetTemp: 300,
-  confinementRadius: 8,
-  confinementForce: 5.0,
-  thermostatTau: 100,
+  confinementRadius: 10,
+  confinementForce: 2.0,
+  thermostatTau: 20,
   stepsPerUpdate: 10,
 }

@@ -42,39 +42,66 @@ export class SimulationEngine {
     // Remove COM velocity
     removeCOMVelocity(this.atoms)
 
-    // Compute initial forces
-    this.computeForces()
+    // Energy minimization to resolve overlaps
+    this.energyMinimize()
 
-    // Run relaxation phase: small timestep with aggressive thermostat
-    this.relax()
+    // Compute initial forces for dynamics
+    this.computeForces()
   }
 
   /**
-   * Relaxation phase at initialization.
-   * Runs a few steps with a smaller timestep and aggressive velocity capping
-   * to gently resolve any initial overlaps.
+   * Energy minimization using steepest descent.
+   * Moves atoms along force vectors to reduce potential energy
+   * without any kinetic energy / dynamics.
    */
-  private relax(): void {
-    const savedDt = this.config.dt
-    const savedTau = this.config.thermostatTau
-    this.config.dt = 0.1 // Very small timestep
-    this.config.thermostatTau = 10 // Very aggressive thermostat
+  private energyMinimize(): void {
+    const maxSteps = 500
+    const initialStepSize = 0.005 // Å
+    let stepSize = initialStepSize
 
-    for (let i = 0; i < 100; i++) {
-      const oldForces: Vec3[] = this.atoms.map((a) => [...a.force] as Vec3)
-      integratePositions(this.atoms, this.config.dt)
+    for (let iter = 0; iter < maxSteps; iter++) {
       this.computeForces()
-      integrateVelocities(this.atoms, oldForces, this.config.dt)
-      this.capVelocities()
-      const { temperature } = calculateTemperature(this.atoms)
-      applyBerendsenThermostat(this.atoms, this.config.targetTemp, temperature, this.config.dt, this.config.thermostatTau)
+
+      // Find max force magnitude
+      let maxForceSq = 0
+      for (const atom of this.atoms) {
+        const fSq = atom.force[0] ** 2 + atom.force[1] ** 2 + atom.force[2] ** 2
+        if (fSq > maxForceSq) maxForceSq = fSq
+      }
+      const maxForce = Math.sqrt(maxForceSq)
+
+      // Converged if max force is small
+      if (maxForce < 0.1) break
+
+      // Normalize step size by max force to prevent overshooting
+      const effectiveStep = Math.min(stepSize, 0.1 / maxForce)
+
+      // Move atoms along force direction (steepest descent)
+      for (const atom of this.atoms) {
+        atom.position[0] += atom.force[0] * effectiveStep
+        atom.position[1] += atom.force[1] * effectiveStep
+        atom.position[2] += atom.force[2] * effectiveStep
+      }
+
+      // Adaptive step size
+      if (iter > 0 && iter % 50 === 0) {
+        stepSize *= 1.2 // Grow step size if making progress
+      }
     }
 
-    // Restore original config
-    this.config.dt = savedDt
-    this.config.thermostatTau = savedTau
+    // After minimization, assign fresh thermal velocities
+    const AMU_TO_INTERNAL = 103.6428
+    const kB = 8.617333262e-5
+    for (const atom of this.atoms) {
+      const sigma = Math.sqrt(kB * this.config.targetTemp / (atom.mass * AMU_TO_INTERNAL))
+      for (let d = 0; d < 3; d++) {
+        // Box-Muller
+        const u1 = Math.random() || 1e-10
+        const u2 = Math.random()
+        atom.velocity[d] = sigma * Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2)
+      }
+    }
 
-    // Remove any accumulated COM drift
     removeCOMVelocity(this.atoms)
   }
 
@@ -143,7 +170,7 @@ export class SimulationEngine {
    * Max velocity is set to prevent atoms from moving more than ~0.3 Å per step.
    */
   private capVelocities(): void {
-    const maxVelComponent = 0.3 / this.config.dt // Å/fs - max ~0.3 Å per step
+    const maxVelComponent = 0.05 / this.config.dt // Å/fs - max ~0.05 Å per step
     for (const atom of this.atoms) {
       for (let d = 0; d < 3; d++) {
         if (atom.velocity[d] > maxVelComponent) atom.velocity[d] = maxVelComponent

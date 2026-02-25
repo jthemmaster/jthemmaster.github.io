@@ -136,7 +136,7 @@ export function generatePreset(
   const atoms: Atom[] = []
   let atomId = 0
   const placedCenters: Vec3[] = []
-  const MIN_MOL_DISTANCE = 2.5 // Å - minimum distance between molecule centers
+  const MIN_MOL_DISTANCE = 3.5 // Å - minimum distance between molecule centers
 
   // Place each molecule
   for (const mol of preset.molecules) {
