@@ -1,5 +1,4 @@
 import { SimulationEngine } from './engine'
-import type { SimConfig, Atom } from './types'
 import type { WorkerCommand, WorkerResponse } from './workerMessages'
 
 let engine: SimulationEngine | null = null

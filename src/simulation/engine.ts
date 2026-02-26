@@ -102,7 +102,7 @@ export class SimulationEngine {
     this.capVelocities()
 
     // 6. Thermostat
-    const { temperature, kineticEnergy } = calculateTemperature(this.atoms)
+    const { temperature } = calculateTemperature(this.atoms)
     if (targetTemp > 0 && thermostatTau > 0) {
       applyBerendsenThermostat(this.atoms, targetTemp, temperature, dt, thermostatTau)
     }

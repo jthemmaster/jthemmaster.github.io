@@ -1,4 +1,4 @@
-import { Play, Pause, RotateCcw, SkipForward, Zap } from 'lucide-react'
+import { Play, Pause, RotateCcw, SkipForward } from 'lucide-react'
 import { useSimulationStore } from '../../stores/simulationStore'
 import Button from '../ui/Button'
 

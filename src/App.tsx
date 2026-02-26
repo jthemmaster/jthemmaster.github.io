@@ -19,6 +19,7 @@ function App() {
   useEffect(() => {
     initSimulation()
     return () => cleanup()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Keyboard shortcuts

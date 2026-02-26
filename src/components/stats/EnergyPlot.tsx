@@ -10,13 +10,19 @@ import {
 import { useSimulationStore } from '../../stores/simulationStore'
 import GlassCard from '../ui/GlassCard'
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface TooltipEntry {
+  name: string
+  value: number
+  color: string
+}
+
+const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: TooltipEntry[]; label?: string }) => {
   if (!active || !payload?.length) return null
 
   return (
     <div className="glass rounded-lg px-3 py-2 text-xs space-y-1 min-w-[130px] shadow-xl">
       <div className="text-text-muted font-mono text-[10px] mb-1.5">Step {label}</div>
-      {payload.map((entry: any) => (
+      {payload.map((entry: TooltipEntry) => (
         <div key={entry.name} className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />

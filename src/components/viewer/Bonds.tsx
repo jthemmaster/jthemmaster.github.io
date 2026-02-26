@@ -14,7 +14,7 @@ export default function Bonds() {
   const bonds = useSimulationStore((s) => s.bonds)
   const positions = useSimulationStore((s) => s.positions)
 
-  const maxBonds = useMemo(() => Math.max(bonds.length, 50), [bonds.length > 0])
+  const maxBonds = useMemo(() => Math.max(bonds.length, 50), [bonds.length])
 
   useFrame(() => {
     if (!meshRef.current || !showBonds) {

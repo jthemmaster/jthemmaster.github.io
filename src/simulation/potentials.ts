@@ -1,6 +1,6 @@
 import type { Vec3 } from './types'
 import { getMorseParams, ELEMENTS } from '../data/elements'
-import { sub, length, scale } from '../lib/vec3'
+import { sub, length } from '../lib/vec3'
 
 const CUTOFF_MIN = 0.3 // Å - hard core repulsion distance
 const CUTOFF_NONBOND = 5.0 // Å - non-bonded interaction cutoff
