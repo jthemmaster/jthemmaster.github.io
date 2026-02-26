@@ -68,8 +68,8 @@ export default function MolecularViewer() {
         </div>
       )}
 
-      {/* Top-right: keyboard hints */}
-      <div className="absolute top-4 right-4 pointer-events-none">
+      {/* Top-right: keyboard hints — desktop only */}
+      <div className="absolute top-4 right-4 pointer-events-none hidden md:block">
         <div className="flex gap-1.5 text-[9px] text-text-muted font-mono">
           <kbd className="px-1.5 py-0.5 rounded bg-white/[0.05] border border-white/[0.08]">Space</kbd>
           <span className="opacity-60">Play/Pause</span>

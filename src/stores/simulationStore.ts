@@ -35,6 +35,7 @@ interface SimulationStore {
   showForces: boolean
   showSphere: boolean
   statsPanelOpen: boolean
+  sidebarOpen: boolean
 
   // Worker ref
   worker: Worker | null
@@ -51,6 +52,9 @@ interface SimulationStore {
   toggleForces: () => void
   toggleSphere: () => void
   toggleStatsPanel: () => void
+  toggleSidebar: () => void
+  setSidebarOpen: (open: boolean) => void
+  setStatsPanelOpen: (open: boolean) => void
   cleanup: () => void
 }
 
@@ -76,7 +80,8 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
   showBonds: true,
   showForces: false,
   showSphere: true,
-  statsPanelOpen: true,
+  statsPanelOpen: typeof window !== 'undefined' && window.innerWidth >= 768,
+  sidebarOpen: false,
   worker: null,
 
   initSimulation: (presetId?: string) => {
@@ -201,6 +206,9 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
   toggleForces: () => set((s) => ({ showForces: !s.showForces })),
   toggleSphere: () => set((s) => ({ showSphere: !s.showSphere })),
   toggleStatsPanel: () => set((s) => ({ statsPanelOpen: !s.statsPanelOpen })),
+  toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
+  setSidebarOpen: (open) => set({ sidebarOpen: open }),
+  setStatsPanelOpen: (open) => set({ statsPanelOpen: open }),
 
   cleanup: () => {
     const { worker } = get()

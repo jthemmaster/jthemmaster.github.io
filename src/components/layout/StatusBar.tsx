@@ -12,9 +12,9 @@ export default function StatusBar() {
   const stepsPerSecond = useSimulationStore((s) => s.stepsPerSecond)
 
   return (
-    <div className="h-9 flex items-center justify-between px-4 bg-bg-surface/60 backdrop-blur-sm border-t border-border-subtle text-[11px] font-mono relative z-10">
+    <div className="h-9 flex items-center justify-between px-3 md:px-4 bg-bg-surface/60 backdrop-blur-sm border-t border-border-subtle text-[11px] font-mono relative z-20">
       {/* Left: status */}
-      <div className="flex items-center gap-3 min-w-[100px]">
+      <div className="flex items-center gap-2">
         {isInitialized ? (
           isRunning ? (
             <Badge variant="success" pulse>Running</Badge>
@@ -26,38 +26,41 @@ export default function StatusBar() {
         )}
       </div>
 
-      {/* Center: simulation info */}
-      <div className="flex items-center gap-3 text-text-secondary">
+      {/* Center: simulation info — full on desktop, compact on mobile */}
+      <div className="flex items-center gap-2 md:gap-3 text-text-secondary">
+        {/* Always show step + temp */}
         <span className="tabular-nums">
-          <span className="text-text-muted">Step</span>{' '}
+          <span className="text-text-muted hidden sm:inline">Step </span>
           <span className="text-text-primary">{step.toLocaleString()}</span>
         </span>
-        <span className="text-border-hover">|</span>
+        <span className="text-border-hover hidden sm:inline">|</span>
         <span className="tabular-nums">
-          <span className="text-text-muted">dt</span>{' '}
-          <span className="text-text-primary">{dt}</span>
-          <span className="text-text-muted"> fs</span>
-        </span>
-        <span className="text-border-hover">|</span>
-        <span className="tabular-nums">
-          <span className="text-text-muted">T</span>{' '}
+          <span className="text-text-muted">T </span>
           <span className="text-text-primary">{isNaN(temperature) ? '—' : temperature.toFixed(0)}</span>
           <span className="text-text-muted"> K</span>
         </span>
-        <span className="text-border-hover">|</span>
-        <span className="tabular-nums">
+
+        {/* Desktop only: dt, atoms, bonds */}
+        <span className="text-border-hover hidden md:inline">|</span>
+        <span className="tabular-nums hidden md:inline">
+          <span className="text-text-muted">dt </span>
+          <span className="text-text-primary">{dt}</span>
+          <span className="text-text-muted"> fs</span>
+        </span>
+        <span className="text-border-hover hidden md:inline">|</span>
+        <span className="tabular-nums hidden md:inline">
           <span className="text-text-primary">{atomCount}</span>
           <span className="text-text-muted"> atoms</span>
         </span>
-        <span className="text-border-hover">|</span>
-        <span className="tabular-nums">
+        <span className="text-border-hover hidden md:inline">|</span>
+        <span className="tabular-nums hidden md:inline">
           <span className="text-text-primary">{bondCount}</span>
           <span className="text-text-muted"> bonds</span>
         </span>
       </div>
 
-      {/* Right: performance */}
-      <div className="flex items-center gap-2 text-text-muted min-w-[100px] justify-end">
+      {/* Right: performance — hidden on small mobile */}
+      <div className="hidden sm:flex items-center gap-2 text-text-muted">
         <span className="tabular-nums">
           {stepsPerSecond > 0 ? (
             <>

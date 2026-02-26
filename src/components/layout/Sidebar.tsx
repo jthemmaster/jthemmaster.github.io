@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Link2, CircleDot, Beaker, Flame, Gauge, Sliders } from 'lucide-react'
+import { Eye, EyeOff, Link2, CircleDot, Beaker, Flame, Gauge, Sliders, X } from 'lucide-react'
 import Logo from '../ui/Logo'
 import PresetSelector from '../controls/PresetSelector'
 import ForceSlider from '../controls/ForceSlider'
@@ -7,6 +7,10 @@ import TemperatureSlider from '../controls/TemperatureSlider'
 import SimulationControls from '../controls/SimulationControls'
 import { useSimulationStore } from '../../stores/simulationStore'
 import Slider from '../ui/Slider'
+
+interface SidebarProps {
+  onClose?: () => void
+}
 
 function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
   return (
@@ -51,7 +55,7 @@ function ToggleRow({
   )
 }
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }: SidebarProps) {
   const showBonds = useSimulationStore((s) => s.showBonds)
   const showSphere = useSimulationStore((s) => s.showSphere)
   const toggleBonds = useSimulationStore((s) => s.toggleBonds)
@@ -60,13 +64,24 @@ export default function Sidebar() {
   const updateConfig = useSimulationStore((s) => s.updateConfig)
 
   return (
-    <aside className="w-[280px] h-full flex flex-col bg-bg-surface/80 backdrop-blur-xl border-r border-border-subtle overflow-hidden">
+    <aside className="w-[280px] h-full flex flex-col bg-bg-surface border-r border-border-subtle overflow-hidden">
       {/* Logo header */}
-      <div className="px-5 py-4 border-b border-border-subtle">
-        <Logo size="md" />
-        <p className="text-[10px] text-text-muted mt-2 leading-relaxed">
-          Interactive Reactive Molecular Dynamics
-        </p>
+      <div className="px-5 py-4 border-b border-border-subtle flex items-start justify-between">
+        <div>
+          <Logo size="md" />
+          <p className="text-[10px] text-text-muted mt-2 leading-relaxed">
+            Interactive Reactive Molecular Dynamics
+          </p>
+        </div>
+        {/* Close button — only on mobile overlay */}
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.05] transition-colors -mr-1 -mt-0.5"
+          >
+            <X size={16} />
+          </button>
+        )}
       </div>
 
       {/* Scrollable content */}

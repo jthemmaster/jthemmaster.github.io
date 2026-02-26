@@ -146,6 +146,25 @@ html, body, #root {
   animation: countUp 0.15s ease-out;
 }
 
+/* Mobile slide-in animations */
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.25s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.25s ease-out;
+}
+
 /* Smooth number transition */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
