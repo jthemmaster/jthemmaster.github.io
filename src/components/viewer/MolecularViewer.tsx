@@ -49,50 +49,41 @@ export default function MolecularViewer() {
       <div className="viewer-vignette pointer-events-none absolute inset-0" />
 
       <div className="pointer-events-none absolute left-4 top-4 right-4 md:left-6 md:top-6 md:right-auto">
-        <div className="w-full max-w-[300px] rounded-[24px] border border-white/[0.08] bg-black/14 px-4 py-4 backdrop-blur-xl md:px-5 md:py-5">
+        <div className="w-full max-w-[520px] border-l border-white/[0.12] pl-4 md:pl-5">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant={isRunning ? 'success' : 'neutral'} pulse={isRunning}>
               {isRunning ? 'Live' : 'Staged'}
             </Badge>
             <span className="text-[11px] uppercase tracking-[0.2em] text-text-secondary">
-              Molecular dynamics
+              Chemistry simulation
             </span>
           </div>
 
-          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-text-primary md:text-[2.7rem]">
+          <h1 className="mt-4 max-w-[11ch] text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-text-primary md:text-[4.1rem]">
             {preset?.name ?? 'Nano Reactor'}
           </h1>
 
+          {preset?.description && (
+            <p className="mt-3 max-w-[32ch] text-[15px] leading-relaxed text-text-muted">
+              {preset.description}
+            </p>
+          )}
+
           {composition && (
-            <div className="mt-2 text-[11px] uppercase tracking-[0.18em] text-text-secondary/80">
+            <div className="mt-4 text-[11px] uppercase tracking-[0.16em] text-text-secondary/80">
               {composition}
             </div>
           )}
 
           {isInitialized && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              <div className="data-pill rounded-full px-3 py-1.5 text-[11px] text-text-secondary">
-                <span className="text-text-muted">Atoms</span>{' '}
-                <span className="font-mono text-text-primary">{atomCount}</span>
-              </div>
-              <div className="data-pill rounded-full px-3 py-1.5 text-[11px] text-text-secondary">
-                <span className="text-text-muted">Bonds</span>{' '}
-                <span className="font-mono text-text-primary">{bondCount}</span>
-              </div>
-              <div className="data-pill rounded-full px-3 py-1.5 text-[11px] text-text-secondary">
-                <span className="text-text-muted">Time</span>{' '}
-                <span className="font-mono text-text-primary">
-                  {step > 0 ? time.toFixed(1) : '0.0'} fs
-                </span>
-              </div>
+            <div className="mt-5 text-[12px] text-text-secondary">
+              <span className="font-mono text-text-primary">{atomCount}</span> atoms
+              <span className="mx-2 text-text-muted">/</span>
+              <span className="font-mono text-text-primary">{bondCount}</span> bonds
+              <span className="mx-2 text-text-muted">/</span>
+              <span className="font-mono text-text-primary">{step > 0 ? time.toFixed(1) : '0.0'} fs</span>
             </div>
           )}
-        </div>
-      </div>
-
-      <div className="pointer-events-none absolute right-6 top-6 hidden lg:block">
-        <div className="rounded-full border border-white/[0.08] bg-black/20 px-4 py-2 text-[11px] text-text-muted backdrop-blur-xl">
-          Drag to orbit · Scroll to zoom · Space to run
         </div>
       </div>
 

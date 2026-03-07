@@ -53,17 +53,17 @@ export default function Slider({
   const colors = colorMap[color]
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] font-medium text-text-secondary uppercase tracking-[0.18em]">
+    <div className="space-y-2.5">
+      <div className="flex items-end justify-between gap-3">
+        <span className="min-w-0 text-[12px] font-medium text-text-secondary">
           {label}
         </span>
-        <span className="text-sm font-mono font-medium text-text-primary tabular-nums">
+        <span className="shrink-0 text-[13px] font-mono font-medium text-text-primary tabular-nums">
           {displayValue}
-          {unit && <span className="text-text-muted ml-1 text-[11px]">{unit}</span>}
+          {unit && <span className="text-text-muted ml-1 text-[10px]">{unit}</span>}
         </span>
       </div>
-      <div className="relative rounded-full px-1 py-2">
+      <div className="relative px-0.5 py-2">
         <div className="absolute top-1/2 -translate-y-1/2 left-0 h-1.5 rounded-full w-full bg-white/[0.08]" />
         <div
           className={`absolute top-1/2 -translate-y-1/2 left-0 h-1.5 rounded-full bg-gradient-to-r ${colors.gradient}`}

@@ -53,8 +53,8 @@ function App() {
     <div className="relative h-full w-full overflow-hidden bg-bg-primary">
       <div className="mesh-gradient" />
 
-      <div className="relative z-10 h-full p-3 md:p-5">
-        <div className="site-shell flex h-full min-h-0 flex-col overflow-hidden rounded-[28px] border border-white/[0.08]">
+      <div className="relative z-10 h-full p-3 md:p-4">
+        <div className="site-shell flex h-full min-h-0 flex-col overflow-hidden rounded-[22px] border border-white/[0.08]">
           <MobileHeader />
 
           <div className="relative flex min-h-0 flex-1">
@@ -69,7 +69,7 @@ function App() {
               >
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-md" />
                 <div
-                  className="absolute left-0 top-0 bottom-0 w-[276px] max-w-[88vw] animate-slide-in-left"
+                  className="absolute left-0 top-0 bottom-0 w-[320px] max-w-[88vw] animate-slide-in-left"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Sidebar onClose={() => setSidebarOpen(false)} />

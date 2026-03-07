@@ -25,10 +25,10 @@ export default function GlassCard({
   return (
     <div
       className={`
-        panel-surface rounded-[22px]
+        panel-surface rounded-[16px]
         ${paddingMap[padding]}
         ${hover ? 'glass-hover transition-all duration-200 cursor-pointer' : ''}
-        ${glow ? 'shadow-[0_18px_50px_rgba(143,124,255,0.12)]' : ''}
+        ${glow ? 'shadow-[0_12px_34px_rgba(143,124,255,0.1)]' : ''}
         ${className}
       `}
     >

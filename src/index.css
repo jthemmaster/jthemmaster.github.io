@@ -54,9 +54,8 @@ html, body, #root {
 body {
   position: relative;
   background:
-    radial-gradient(circle at top left, rgba(143, 124, 255, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(108, 182, 255, 0.06), transparent 24%),
-    linear-gradient(180deg, #06080C 0%, #040608 100%);
+    radial-gradient(circle at top left, rgba(108, 182, 255, 0.045), transparent 30%),
+    linear-gradient(180deg, #081019 0%, #060B12 44%, #05080D 100%);
 }
 
 body::before,
@@ -69,17 +68,13 @@ body::after {
 }
 
 body::before {
-  background:
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 80%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 26%);
 }
 
 body::after {
   background:
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03), transparent 45%),
-    radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.02), transparent 50%);
+    radial-gradient(circle at 82% 14%, rgba(143, 124, 255, 0.045), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.015), transparent 48%);
 }
 
 /* Custom scrollbar */
@@ -116,34 +111,34 @@ body::after {
 
 /* Shared surfaces */
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
 .glass-hover:hover {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035));
-  border-color: rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.03));
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .site-shell {
-  background: linear-gradient(180deg, rgba(11, 16, 23, 0.82), rgba(8, 12, 18, 0.94));
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.42);
+  background: linear-gradient(180deg, rgba(10, 16, 24, 0.78), rgba(7, 11, 17, 0.92));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 28px 100px rgba(0, 0, 0, 0.34);
 }
 
 .panel-surface {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
 }
 
 .panel-soft {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(255, 255, 255, 0.055);
 }
 
 .panel-soft-hover {
@@ -151,19 +146,19 @@ body::after {
 }
 
 .panel-soft-hover:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.032);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .viewer-vignette {
   background:
-    linear-gradient(180deg, rgba(5, 7, 10, 0.72), rgba(5, 7, 10, 0.16) 24%, rgba(5, 7, 10, 0.06) 54%, rgba(5, 7, 10, 0.56) 100%),
-    radial-gradient(circle at 50% 50%, transparent 35%, rgba(5, 7, 10, 0.4) 100%);
+    linear-gradient(180deg, rgba(5, 8, 13, 0.56), rgba(5, 8, 13, 0.12) 28%, rgba(5, 8, 13, 0.04) 56%, rgba(5, 8, 13, 0.44) 100%),
+    radial-gradient(circle at 50% 52%, transparent 42%, rgba(5, 8, 13, 0.28) 100%);
 }
 
 .data-pill {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.028);
+  border: 1px solid rgba(255, 255, 255, 0.065);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -193,9 +188,8 @@ body::after {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 20% 15%, rgba(143, 124, 255, 0.06) 0%, transparent 40%),
-    radial-gradient(ellipse at 84% 20%, rgba(108, 182, 255, 0.05) 0%, transparent 36%),
-    radial-gradient(ellipse at 50% 100%, rgba(99, 212, 255, 0.03) 0%, transparent 42%);
+    radial-gradient(ellipse at 18% 10%, rgba(108, 182, 255, 0.045) 0%, transparent 32%),
+    radial-gradient(ellipse at 80% 14%, rgba(143, 124, 255, 0.04) 0%, transparent 30%);
 }
 
 /* Section transition */

@@ -11,11 +11,14 @@ export default function SimulationControls() {
   const reset = useSimulationStore((s) => s.reset)
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3.5">
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
+          <div className="text-[11px] font-medium uppercase tracking-[0.16em] text-text-secondary">
             Simulation
+          </div>
+          <div className="mt-1 text-[13px] text-text-muted">
+            Run or reset the active reaction.
           </div>
         </div>
         <Badge variant={isRunning ? 'success' : isInitialized ? 'warning' : 'neutral'} pulse={isRunning}>

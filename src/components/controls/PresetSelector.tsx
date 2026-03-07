@@ -16,17 +16,17 @@ export default function PresetSelector() {
             key={preset.id}
             onClick={() => setPreset(preset.id)}
             className={`
-              w-full rounded-2xl border px-3.5 py-3 text-left transition-all duration-200
+              w-full rounded-[14px] border px-3.5 py-3 text-left transition-all duration-200
               ${isSelected
-                ? 'border-white/14 bg-white/[0.07]'
-                : 'border-transparent bg-transparent hover:border-white/[0.08] hover:bg-white/[0.03]'
+                ? 'border-white/12 bg-white/[0.055]'
+                : 'border-transparent bg-transparent hover:border-white/[0.06] hover:bg-white/[0.025]'
               }
             `}
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
                 <div
-                  className={`text-sm font-medium truncate ${
+                  className={`text-[13px] font-medium truncate ${
                     isSelected ? 'text-text-primary' : 'text-text-secondary'
                   }`}
                 >
@@ -37,7 +37,7 @@ export default function PresetSelector() {
                 </div>
               </div>
               <div
-                className={`rounded-full px-2 py-1 text-[10px] font-medium uppercase tracking-[0.18em] ${
+                className={`rounded-md px-2 py-1 text-[10px] font-medium uppercase tracking-[0.14em] ${
                   isSelected
                     ? 'bg-white/[0.1] text-text-primary'
                     : 'bg-white/[0.04] text-text-muted'

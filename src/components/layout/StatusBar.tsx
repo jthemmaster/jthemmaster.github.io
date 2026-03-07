@@ -7,8 +7,6 @@ export default function StatusBar() {
   const step = useSimulationStore((s) => s.step)
   const dt = useSimulationStore((s) => s.config.dt)
   const temperature = useSimulationStore((s) => s.temperature)
-  const atomCount = useSimulationStore((s) => s.elements.length)
-  const bondCount = useSimulationStore((s) => s.bonds.length)
   const stepsPerSecond = useSimulationStore((s) => s.stepsPerSecond)
 
   return (
@@ -38,15 +36,7 @@ export default function StatusBar() {
         <span className="hidden tabular-nums text-text-primary md:inline">{dt} fs</span>
       </div>
 
-      <div className="flex items-center gap-2 text-text-muted">
-        <span className="hidden tabular-nums md:inline">
-          <span className="text-text-primary">{atomCount}</span> atoms
-        </span>
-        <span className="hidden text-border-hover md:inline">/</span>
-        <span className="hidden tabular-nums md:inline">
-          <span className="text-text-primary">{bondCount}</span> bonds
-        </span>
-        <span className="hidden text-border-hover sm:inline">/</span>
+      <div className="hidden items-center gap-2 text-text-muted lg:flex">
         <span className="tabular-nums">
           <span className="text-text-primary">{stepsPerSecond > 0 ? stepsPerSecond.toFixed(0) : '—'}</span>{' '}
           steps/s
