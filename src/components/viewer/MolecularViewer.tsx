@@ -49,25 +49,22 @@ export default function MolecularViewer() {
       <div className="viewer-vignette pointer-events-none absolute inset-0" />
 
       <div className="pointer-events-none absolute left-4 top-4 right-4 md:left-6 md:top-6 md:right-auto">
-        <div className="w-full max-w-[360px] rounded-[24px] border border-white/[0.08] bg-black/16 px-4 py-4 backdrop-blur-xl md:px-5 md:py-5">
+        <div className="w-full max-w-[300px] rounded-[24px] border border-white/[0.08] bg-black/14 px-4 py-4 backdrop-blur-xl md:px-5 md:py-5">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant={isRunning ? 'success' : 'neutral'} pulse={isRunning}>
               {isRunning ? 'Live' : 'Staged'}
             </Badge>
             <span className="text-[11px] uppercase tracking-[0.2em] text-text-secondary">
-              Reactive molecular dynamics
+              Molecular dynamics
             </span>
           </div>
 
-          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-text-primary md:text-4xl">
+          <h1 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-text-primary md:text-[2.7rem]">
             {preset?.name ?? 'Nano Reactor'}
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-text-muted">
-            {preset?.description ?? 'Interactive reaction simulation in a focused cinematic workspace.'}
-          </p>
 
           {composition && (
-            <div className="mt-3 text-[11px] uppercase tracking-[0.18em] text-text-secondary/80">
+            <div className="mt-2 text-[11px] uppercase tracking-[0.18em] text-text-secondary/80">
               {composition}
             </div>
           )}

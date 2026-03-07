@@ -16,12 +16,9 @@ function StatsPanelContent() {
         <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
           Insights
         </div>
-        <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-text-primary">
-          Live reaction analytics
+        <h2 className="mt-2 text-lg font-semibold tracking-[-0.03em] text-text-primary">
+          Live analytics
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-text-muted">
-          Monitor thermal behavior, energy exchange, and species distribution as the system evolves.
-        </p>
       </div>
       <MetricsGrid />
       <EnergyPlot />
@@ -43,9 +40,6 @@ export default function StatsPanel({ mobile }: StatsPanelProps) {
             <div>
               <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
                 Insights
-              </div>
-              <div className="mt-1 text-sm text-text-muted">
-                Analytics for the current simulation.
               </div>
             </div>
             <button
@@ -79,10 +73,10 @@ export default function StatsPanel({ mobile }: StatsPanelProps) {
         className={`
           h-full overflow-y-auto border-l border-white/[0.06] bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015))]
           transition-all duration-300 ease-out
-          ${statsPanelOpen ? 'w-[320px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
+          ${statsPanelOpen ? 'w-[280px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
         `}
       >
-        <div className="w-[320px] p-5">
+        <div className="w-[280px] p-5">
           <StatsPanelContent />
         </div>
       </aside>

@@ -24,7 +24,7 @@ function SectionHeader({
       <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
         {title}
       </div>
-      <p className="text-sm text-text-muted leading-relaxed">
+      <p className="text-[13px] text-text-muted leading-relaxed">
         {description}
       </p>
     </div>
@@ -73,17 +73,17 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const updateConfig = useSimulationStore((s) => s.updateConfig)
 
   return (
-    <aside className="h-full w-[300px] shrink-0 overflow-hidden border-r border-white/[0.06] bg-[linear-gradient(180deg,rgba(255,255,255,0.025),rgba(255,255,255,0.01))]">
+    <aside className="h-full w-[276px] shrink-0 overflow-hidden border-r border-white/[0.06] bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.008))]">
       <div className="border-b border-white/[0.06] px-5 py-5">
         <div className="flex items-start justify-between gap-4">
-          <div className="space-y-4">
+          <div className="space-y-3">
             <Logo size="md" />
             <div>
               <div className="text-[11px] font-medium uppercase tracking-[0.2em] text-text-secondary">
-                Reactive molecular workspace
+                Minimal molecular workspace
               </div>
-              <p className="mt-2 max-w-[230px] text-sm leading-relaxed text-text-muted">
-                Focused controls for bond formation, energy transfer, and reactor tuning in real time.
+              <p className="mt-2 max-w-[200px] text-[13px] leading-relaxed text-text-muted">
+                Simple controls. Clean visuals. Real-time reaction behavior.
               </p>
             </div>
           </div>
@@ -103,19 +103,19 @@ export default function Sidebar({ onClose }: SidebarProps) {
         <div className="space-y-3">
           <SectionHeader
             title="Scenario"
-            description="Choose the starting reaction system."
+            description="Choose a starting system."
           />
           <PresetSelector />
         </div>
 
-        <div className="panel-surface space-y-4 rounded-[24px] p-4">
+        <div className="panel-surface space-y-3 rounded-[24px] p-4">
           <SimulationControls />
         </div>
 
         <div className="panel-surface space-y-4 rounded-[24px] p-4">
           <SectionHeader
             title="Reactor"
-            description="Adjust confinement, chamber size, and thermal target."
+            description="Tune the chamber."
           />
           <div className="space-y-4">
             <ForceSlider />
@@ -138,7 +138,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
         <div className="panel-surface space-y-4 rounded-[24px] p-4">
           <SectionHeader
             title="Display"
-            description="Show only the information that helps you read the scene."
+            description="Keep the scene clean."
           />
           <div className="space-y-2">
             <ToggleRow
@@ -158,8 +158,8 @@ export default function Sidebar({ onClose }: SidebarProps) {
       </div>
 
       <div className="border-t border-white/[0.06] px-5 py-4">
-        <p className="text-[11px] leading-relaxed text-text-muted">
-          Morse potential, Velocity Verlet integration, and Berendsen thermostat tuned for an interactive research-style workflow.
+        <p className="text-[10px] leading-relaxed text-text-muted">
+          Morse potential · Velocity Verlet · Berendsen thermostat
         </p>
       </div>
     </aside>

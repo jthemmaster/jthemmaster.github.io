@@ -69,7 +69,7 @@ function App() {
               >
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-md" />
                 <div
-                  className="absolute left-0 top-0 bottom-0 w-[300px] max-w-[88vw] animate-slide-in-left"
+                  className="absolute left-0 top-0 bottom-0 w-[276px] max-w-[88vw] animate-slide-in-left"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Sidebar onClose={() => setSidebarOpen(false)} />
@@ -92,7 +92,7 @@ function App() {
               >
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-md" />
                 <div
-                  className="absolute right-0 top-0 bottom-0 w-[320px] max-w-[88vw] animate-slide-in-right"
+                  className="absolute right-0 top-0 bottom-0 w-[280px] max-w-[88vw] animate-slide-in-right"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <StatsPanel mobile />

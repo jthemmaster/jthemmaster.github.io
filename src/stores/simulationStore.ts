@@ -79,8 +79,8 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
   selectedPreset: PRESETS[0].id,
   showBonds: true,
   showForces: false,
-  showSphere: true,
-  statsPanelOpen: typeof window !== 'undefined' && window.innerWidth >= 768,
+  showSphere: false,
+  statsPanelOpen: false,
   sidebarOpen: false,
   worker: null,
 

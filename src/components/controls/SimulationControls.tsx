@@ -11,14 +11,11 @@ export default function SimulationControls() {
   const reset = useSimulationStore((s) => s.reset)
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div>
           <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
             Simulation
-          </div>
-          <div className="mt-1 text-sm text-text-muted">
-            Start, step through, or reset the current reaction.
           </div>
         </div>
         <Badge variant={isRunning ? 'success' : isInitialized ? 'warning' : 'neutral'} pulse={isRunning}>
@@ -59,12 +56,6 @@ export default function SimulationControls() {
         >
           <span>Reset</span>
         </Button>
-      </div>
-
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] px-3 py-2.5 text-[11px] text-text-muted">
-        Shortcuts: <span className="text-text-secondary">Space</span> run or pause,{' '}
-        <span className="text-text-secondary">S</span> step,{' '}
-        <span className="text-text-secondary">R</span> reset.
       </div>
     </div>
   )
