@@ -1,4 +1,4 @@
-import { ChevronRight, ChevronLeft, BarChart3, X } from 'lucide-react'
+import { ChevronRight, ChevronLeft, X } from 'lucide-react'
 import MetricsGrid from '../stats/MetricsGrid'
 import EnergyPlot from '../stats/EnergyPlot'
 import SpeciesPanel from '../stats/SpeciesPanel'
@@ -9,73 +9,81 @@ interface StatsPanelProps {
   mobile?: boolean
 }
 
+function StatsPanelContent() {
+  return (
+    <div className="space-y-4">
+      <div>
+        <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
+          Insights
+        </div>
+        <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-text-primary">
+          Live reaction analytics
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-text-muted">
+          Monitor thermal behavior, energy exchange, and species distribution as the system evolves.
+        </p>
+      </div>
+      <MetricsGrid />
+      <EnergyPlot />
+      <SpeciesPanel />
+    </div>
+  )
+}
+
 export default function StatsPanel({ mobile }: StatsPanelProps) {
   const statsPanelOpen = useSimulationStore((s) => s.statsPanelOpen)
   const toggleStatsPanel = useSimulationStore((s) => s.toggleStatsPanel)
   const setStatsPanelOpen = useSimulationStore((s) => s.setStatsPanelOpen)
 
-  // Mobile: always render as full panel (overlay is handled by App)
   if (mobile) {
     return (
-      <aside className="w-full h-full bg-bg-surface border-l border-border-subtle overflow-y-auto">
-        <div className="p-4 space-y-4">
+      <aside className="h-full w-full overflow-y-auto bg-[linear-gradient(180deg,rgba(11,16,23,0.96),rgba(8,12,18,0.96))]">
+        <div className="space-y-4 p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <BarChart3 size={14} className="text-text-muted" />
-              <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-wider">
-                Monitoring
-              </span>
+            <div>
+              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
+                Insights
+              </div>
+              <div className="mt-1 text-sm text-text-muted">
+                Analytics for the current simulation.
+              </div>
             </div>
             <button
               onClick={() => setStatsPanelOpen(false)}
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.05] transition-colors"
+              className="panel-soft panel-soft-hover flex h-9 w-9 items-center justify-center rounded-xl text-text-muted hover:text-text-primary"
             >
               <X size={16} />
             </button>
           </div>
-          <MetricsGrid />
-          <EnergyPlot />
-          <SpeciesPanel />
+          <StatsPanelContent />
         </div>
       </aside>
     )
   }
 
-  // Desktop: collapsible side panel
   return (
     <div className="relative flex">
-      {/* Toggle button */}
-      <div className="absolute -left-3 top-4 z-10">
+      <div className="absolute -left-4 top-6 z-20">
         <Button
           variant="icon"
           size="sm"
           onClick={toggleStatsPanel}
-          className="!rounded-full shadow-lg shadow-black/20"
-          title={statsPanelOpen ? 'Hide Stats' : 'Show Stats'}
+          className="shadow-[0_14px_30px_rgba(0,0,0,0.24)]"
+          title={statsPanelOpen ? 'Hide insights' : 'Show insights'}
         >
           {statsPanelOpen ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
         </Button>
       </div>
 
-      {/* Panel */}
       <aside
         className={`
-          h-full bg-bg-surface/80 backdrop-blur-xl border-l border-border-subtle overflow-y-auto
+          h-full overflow-y-auto border-l border-white/[0.06] bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015))]
           transition-all duration-300 ease-out
-          ${statsPanelOpen ? 'w-[300px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
+          ${statsPanelOpen ? 'w-[320px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
         `}
       >
-        <div className="w-[300px] p-4 space-y-4">
-          <div className="flex items-center gap-2">
-            <BarChart3 size={14} className="text-text-muted" />
-            <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-wider">
-              Monitoring
-            </span>
-            <div className="flex-1 h-px bg-gradient-to-r from-border-subtle to-transparent" />
-          </div>
-          <MetricsGrid />
-          <EnergyPlot />
-          <SpeciesPanel />
+        <div className="w-[320px] p-5">
+          <StatsPanelContent />
         </div>
       </aside>
     </div>

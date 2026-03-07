@@ -9,25 +9,25 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles = {
   primary:
-    'bg-gradient-to-r from-accent-purple to-accent-blue text-white shadow-lg shadow-accent-purple/20 hover:shadow-accent-purple/40 hover:brightness-110 active:brightness-90',
+    'border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] text-white shadow-[0_14px_40px_rgba(0,0,0,0.22)] hover:border-white/18 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.07))]',
   secondary:
-    'glass glass-hover text-text-primary hover:text-white',
+    'panel-soft panel-soft-hover text-text-primary hover:text-white',
   ghost:
-    'bg-transparent text-text-secondary hover:text-text-primary hover:bg-white/[0.05] active:bg-white/[0.08]',
+    'bg-transparent text-text-secondary hover:text-text-primary hover:bg-white/[0.04] active:bg-white/[0.06]',
   icon:
-    'glass glass-hover text-text-secondary hover:text-text-primary aspect-square flex items-center justify-center',
+    'panel-soft panel-soft-hover text-text-secondary hover:text-text-primary aspect-square flex items-center justify-center',
 }
 
 const sizeStyles = {
-  sm: 'px-3 py-1.5 text-xs rounded-lg gap-1.5',
-  md: 'px-4 py-2 text-sm rounded-lg gap-2',
-  lg: 'px-5 py-2.5 text-sm rounded-xl gap-2',
+  sm: 'px-3 py-1.5 text-xs rounded-xl gap-1.5',
+  md: 'px-4 py-2.5 text-sm rounded-xl gap-2',
+  lg: 'px-5 py-3 text-sm rounded-2xl gap-2',
 }
 
 const iconSizeStyles = {
-  sm: 'w-7 h-7 rounded-lg',
-  md: 'w-9 h-9 rounded-lg',
-  lg: 'w-11 h-11 rounded-xl',
+  sm: 'w-8 h-8 rounded-xl',
+  md: 'w-10 h-10 rounded-xl',
+  lg: 'w-12 h-12 rounded-2xl',
 }
 
 export default function Button({
@@ -48,8 +48,8 @@ export default function Button({
         transition-all duration-200 ease-out
         ${variantStyles[variant]}
         ${sizeClass}
-        ${glow ? 'shadow-[0_0_20px_rgba(139,92,246,0.3)]' : ''}
-        ${disabled ? 'opacity-40 pointer-events-none' : 'active:scale-[0.97]'}
+        ${glow ? 'shadow-[0_18px_50px_rgba(143,124,255,0.16)]' : ''}
+        ${disabled ? 'opacity-40 pointer-events-none' : 'active:scale-[0.985]'}
         ${className}
       `}
       disabled={disabled}

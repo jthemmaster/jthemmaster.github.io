@@ -4,73 +4,31 @@ interface LogoProps {
 }
 
 const sizeMap = {
-  sm: { icon: 24, text: 'text-sm' },
-  md: { icon: 32, text: 'text-base' },
-  lg: { icon: 40, text: 'text-lg' },
+  sm: { icon: 'h-9 w-9 rounded-2xl', text: 'text-sm', dot: 'h-2.5 w-2.5', inset: 'inset-[8px]' },
+  md: { icon: 'h-11 w-11 rounded-[18px]', text: 'text-base', dot: 'h-3 w-3', inset: 'inset-[9px]' },
+  lg: { icon: 'h-14 w-14 rounded-[22px]', text: 'text-lg', dot: 'h-3.5 w-3.5', inset: 'inset-[11px]' },
 }
 
 export default function Logo({ showText = true, size = 'md' }: LogoProps) {
-  const { icon, text } = sizeMap[size]
+  const { icon, text, dot, inset } = sizeMap[size]
 
   return (
-    <div className="flex items-center gap-2.5">
-      <div className="relative">
-        <svg
-          width={icon}
-          height={icon}
-          viewBox="0 0 64 64"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="animate-[spin_20s_linear_infinite]"
-        >
-          <ellipse
-            cx="32"
-            cy="32"
-            rx="26"
-            ry="10"
-            stroke="url(#logoGrad)"
-            strokeWidth="1.5"
-            opacity="0.6"
-            transform="rotate(0 32 32)"
-          />
-          <ellipse
-            cx="32"
-            cy="32"
-            rx="26"
-            ry="10"
-            stroke="url(#logoGrad)"
-            strokeWidth="1.5"
-            opacity="0.6"
-            transform="rotate(60 32 32)"
-          />
-          <ellipse
-            cx="32"
-            cy="32"
-            rx="26"
-            ry="10"
-            stroke="url(#logoGrad)"
-            strokeWidth="1.5"
-            opacity="0.6"
-            transform="rotate(-60 32 32)"
-          />
-          <defs>
-            <linearGradient id="logoGrad" x1="6" y1="32" x2="58" y2="32">
-              <stop offset="0%" stopColor="#8B5CF6" />
-              <stop offset="100%" stopColor="#3B82F6" />
-            </linearGradient>
-          </defs>
-        </svg>
-        <div
-          className="absolute inset-0 flex items-center justify-center"
-          style={{ animation: 'none' }}
-        >
-          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-accent-purple to-accent-blue shadow-[0_0_12px_rgba(139,92,246,0.6)]" />
+    <div className="flex items-center gap-3">
+      <div
+        className={`
+          relative shrink-0 border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))]
+          shadow-[0_14px_36px_rgba(0,0,0,0.28)] ${icon}
+        `}
+      >
+        <div className={`absolute ${inset} rounded-[14px] border border-white/10 bg-white/[0.02]`} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className={`${dot} rounded-full bg-[linear-gradient(135deg,#FFFFFF_0%,#C9DDFF_40%,#8F7CFF_100%)]`} />
         </div>
       </div>
       {showText && (
-        <div className="flex items-baseline gap-0">
-          <span className={`font-semibold ${text} gradient-text`}>Nano</span>
-          <span className={`font-semibold ${text} text-text-primary`}>Reactor</span>
+        <div className="flex items-baseline gap-1">
+          <span className={`font-semibold tracking-[-0.02em] ${text} gradient-text`}>Nano</span>
+          <span className={`font-semibold tracking-[-0.02em] ${text} text-text-primary`}>Reactor</span>
         </div>
       )}
     </div>

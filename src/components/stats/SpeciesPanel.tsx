@@ -43,46 +43,49 @@ export default function SpeciesPanel() {
   const totalMolecules = species.reduce((sum, s) => sum + s.count, 0)
 
   return (
-    <GlassCard padding="sm" className="space-y-2">
+    <GlassCard padding="sm" className="space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-text-secondary uppercase tracking-wider">
-          Species
-        </span>
-        <span className="text-[10px] font-mono text-text-muted tabular-nums">
+        <div>
+          <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
+            Species
+          </div>
+          <div className="mt-1 text-xs text-text-muted">
+            Product distribution detected in the current chamber.
+          </div>
+        </div>
+        <span className="text-[11px] font-mono text-text-muted tabular-nums">
           {totalMolecules} molecules
         </span>
       </div>
 
       {species.length > 0 ? (
-        <div className="space-y-1 max-h-[200px] overflow-y-auto">
+        <div className="max-h-[220px] space-y-2 overflow-y-auto">
           {species.map((sp) => {
             const percentage = totalMolecules > 0 ? (sp.count / totalMolecules) * 100 : 0
 
             return (
               <div
                 key={sp.formula}
-                className="flex items-center justify-between py-1 px-2 rounded-lg bg-white/[0.02] hover:bg-white/[0.04] transition-colors"
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.025] px-3 py-3"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-3">
                   <FormulaDisplay formula={sp.formula} />
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-1 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-accent-purple to-accent-blue transition-all duration-300"
-                      style={{ width: `${Math.min(percentage, 100)}%` }}
-                    />
-                  </div>
-                  <span className="text-xs font-mono text-text-secondary tabular-nums w-6 text-right">
+                  <span className="w-10 text-right text-sm font-mono text-text-secondary tabular-nums">
                     {sp.count}
                   </span>
+                </div>
+                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-accent-purple to-accent-blue transition-all duration-300"
+                    style={{ width: `${Math.min(percentage, 100)}%` }}
+                  />
                 </div>
               </div>
             )
           })}
         </div>
       ) : (
-        <div className="text-text-muted text-xs text-center py-4">
+        <div className="py-5 text-center text-sm text-text-muted">
           No species detected
         </div>
       )}

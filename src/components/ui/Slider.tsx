@@ -14,19 +14,19 @@ interface SliderProps {
 
 const colorMap = {
   purple: {
-    thumb: '#8B5CF6',
-    glow: 'rgba(139, 92, 246, 0.4)',
-    gradient: 'from-[#8B5CF6] to-[#6D28D9]',
+    thumb: '#8F7CFF',
+    glow: 'rgba(143, 124, 255, 0.22)',
+    gradient: 'from-[#A999FF] to-[#8F7CFF]',
   },
   blue: {
-    thumb: '#3B82F6',
-    glow: 'rgba(59, 130, 246, 0.4)',
-    gradient: 'from-[#3B82F6] to-[#2563EB]',
+    thumb: '#6CB6FF',
+    glow: 'rgba(108, 182, 255, 0.22)',
+    gradient: 'from-[#89C7FF] to-[#6CB6FF]',
   },
   cyan: {
-    thumb: '#06B6D4',
-    glow: 'rgba(6, 182, 212, 0.4)',
-    gradient: 'from-[#06B6D4] to-[#0891B2]',
+    thumb: '#63D4FF',
+    glow: 'rgba(99, 212, 255, 0.22)',
+    gradient: 'from-[#8AE0FF] to-[#63D4FF]',
   },
 }
 
@@ -53,20 +53,20 @@ export default function Slider({
   const colors = colorMap[color]
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-text-secondary uppercase tracking-wider">
+        <span className="text-[11px] font-medium text-text-secondary uppercase tracking-[0.18em]">
           {label}
         </span>
-        <span className="text-xs font-mono font-medium text-text-primary tabular-nums">
+        <span className="text-sm font-mono font-medium text-text-primary tabular-nums">
           {displayValue}
-          {unit && <span className="text-text-muted ml-1">{unit}</span>}
+          {unit && <span className="text-text-muted ml-1 text-[11px]">{unit}</span>}
         </span>
       </div>
-      <div className="relative">
-        <div className="absolute top-1/2 -translate-y-1/2 left-0 h-1 rounded-full w-full bg-white/[0.06]" />
+      <div className="relative rounded-full px-1 py-2">
+        <div className="absolute top-1/2 -translate-y-1/2 left-0 h-1.5 rounded-full w-full bg-white/[0.08]" />
         <div
-          className={`absolute top-1/2 -translate-y-1/2 left-0 h-1 rounded-full bg-gradient-to-r ${colors.gradient}`}
+          className={`absolute top-1/2 -translate-y-1/2 left-0 h-1.5 rounded-full bg-gradient-to-r ${colors.gradient}`}
           style={{ width: `${percentage}%` }}
         />
         <input

@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Link2, CircleDot, Beaker, Flame, Gauge, Sliders, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import Logo from '../ui/Logo'
 import PresetSelector from '../controls/PresetSelector'
 import ForceSlider from '../controls/ForceSlider'
@@ -12,44 +12,53 @@ interface SidebarProps {
   onClose?: () => void
 }
 
-function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
+function SectionHeader({
+  title,
+  description,
+}: {
+  title: string
+  description: string
+}) {
   return (
-    <div className="flex items-center gap-2 px-1 mb-3">
-      <span className="text-text-muted opacity-60">{icon}</span>
-      <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-wider">
+    <div className="space-y-1 px-1">
+      <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
         {title}
-      </span>
-      <div className="flex-1 h-px bg-gradient-to-r from-border-subtle to-transparent" />
+      </div>
+      <p className="text-sm text-text-muted leading-relaxed">
+        {description}
+      </p>
     </div>
   )
 }
 
 function ToggleRow({
   label,
-  icon,
+  detail,
   active,
   onToggle,
 }: {
   label: string
-  icon: React.ReactNode
+  detail: string
   active: boolean
   onToggle: () => void
 }) {
   return (
     <button
       onClick={onToggle}
-      className={`
-        flex items-center gap-2.5 w-full px-2.5 py-2 rounded-lg text-xs
-        transition-all duration-200
-        ${active
-          ? 'bg-white/[0.05] text-text-primary border border-white/[0.06]'
-          : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.02]'}
-      `}
+      className="panel-soft panel-soft-hover flex w-full items-center justify-between gap-4 rounded-2xl px-4 py-3 text-left"
     >
-      <span className="w-4 h-4 flex items-center justify-center opacity-70">{icon}</span>
-      <span className="flex-1 text-left font-medium">{label}</span>
-      <span className={`transition-opacity ${active ? 'opacity-100' : 'opacity-40'}`}>
-        {active ? <Eye size={12} /> : <EyeOff size={12} />}
+      <div className="min-w-0">
+        <div className="text-sm font-medium text-text-primary">{label}</div>
+        <div className="mt-1 text-[11px] leading-relaxed text-text-muted">{detail}</div>
+      </div>
+      <span
+        className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.18em] ${
+          active
+            ? 'bg-white/[0.08] text-text-primary'
+            : 'bg-white/[0.04] text-text-muted'
+        }`}
+      >
+        {active ? 'On' : 'Off'}
       </span>
     </button>
   )
@@ -64,55 +73,61 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const updateConfig = useSimulationStore((s) => s.updateConfig)
 
   return (
-    <aside className="w-[280px] h-full flex flex-col bg-bg-surface border-r border-border-subtle overflow-hidden">
-      {/* Logo header */}
-      <div className="px-5 py-4 border-b border-border-subtle flex items-start justify-between">
-        <div>
-          <Logo size="md" />
-          <p className="text-[10px] text-text-muted mt-2 leading-relaxed">
-            Interactive Reactive Molecular Dynamics
-          </p>
+    <aside className="h-full w-[300px] shrink-0 overflow-hidden border-r border-white/[0.06] bg-[linear-gradient(180deg,rgba(255,255,255,0.025),rgba(255,255,255,0.01))]">
+      <div className="border-b border-white/[0.06] px-5 py-5">
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-4">
+            <Logo size="md" />
+            <div>
+              <div className="text-[11px] font-medium uppercase tracking-[0.2em] text-text-secondary">
+                Reactive molecular workspace
+              </div>
+              <p className="mt-2 max-w-[230px] text-sm leading-relaxed text-text-muted">
+                Focused controls for bond formation, energy transfer, and reactor tuning in real time.
+              </p>
+            </div>
+          </div>
+
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="panel-soft panel-soft-hover flex h-9 w-9 items-center justify-center rounded-xl text-text-muted hover:text-text-primary"
+            >
+              <X size={16} />
+            </button>
+          )}
         </div>
-        {/* Close button — only on mobile overlay */}
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.05] transition-colors -mr-1 -mt-0.5"
-          >
-            <X size={16} />
-          </button>
-        )}
       </div>
 
-      {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
-        {/* Presets */}
-        <div>
-          <SectionHeader icon={<Beaker size={12} />} title="Molecular System" />
+      <div className="flex-1 space-y-6 overflow-y-auto px-4 py-5">
+        <div className="space-y-3">
+          <SectionHeader
+            title="Scenario"
+            description="Choose the starting reaction system."
+          />
           <PresetSelector />
         </div>
 
-        {/* Reactor Controls */}
-        <div>
-          <SectionHeader icon={<Flame size={12} />} title="Reactor Controls" />
+        <div className="panel-surface space-y-4 rounded-[24px] p-4">
+          <SimulationControls />
+        </div>
+
+        <div className="panel-surface space-y-4 rounded-[24px] p-4">
+          <SectionHeader
+            title="Reactor"
+            description="Adjust confinement, chamber size, and thermal target."
+          />
           <div className="space-y-4">
             <ForceSlider />
             <RadiusSlider />
-          </div>
-        </div>
-
-        {/* Environment */}
-        <div>
-          <SectionHeader icon={<Gauge size={12} />} title="Environment" />
-          <div className="space-y-4">
             <TemperatureSlider />
             <Slider
-              label="Sim Speed"
+              label="Simulation Speed"
               value={stepsPerUpdate}
               min={1}
               max={50}
               step={1}
-              unit="steps/frame"
+              unit="steps"
               color="blue"
               onChange={(v) => updateConfig({ stepsPerUpdate: Math.round(v) })}
               formatValue={(v) => v.toFixed(0)}
@@ -120,24 +135,21 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </div>
         </div>
 
-        {/* Simulation Controls */}
-        <div>
-          <SimulationControls />
-        </div>
-
-        {/* Visualization Toggles */}
-        <div>
-          <SectionHeader icon={<Sliders size={12} />} title="Display" />
-          <div className="space-y-1">
+        <div className="panel-surface space-y-4 rounded-[24px] p-4">
+          <SectionHeader
+            title="Display"
+            description="Show only the information that helps you read the scene."
+          />
+          <div className="space-y-2">
             <ToggleRow
-              label="Show Bonds"
-              icon={<Link2 size={12} />}
+              label="Bond network"
+              detail="Reveal live bond detection between nearby atoms."
               active={showBonds}
               onToggle={toggleBonds}
             />
             <ToggleRow
-              label="Show Confinement"
-              icon={<CircleDot size={12} />}
+              label="Reaction boundary"
+              detail="Show the confinement sphere that defines the chamber."
               active={showSphere}
               onToggle={toggleSphere}
             />
@@ -145,12 +157,10 @@ export default function Sidebar({ onClose }: SidebarProps) {
         </div>
       </div>
 
-      {/* Bottom attribution */}
-      <div className="px-4 py-3 border-t border-border-subtle bg-bg-primary/50">
-        <div className="text-[9px] text-text-muted text-center space-y-0.5">
-          <div className="font-medium">Morse Potential · Velocity Verlet · Berendsen</div>
-          <div className="opacity-60">Reactive Bond-Order Force Field</div>
-        </div>
+      <div className="border-t border-white/[0.06] px-5 py-4">
+        <p className="text-[11px] leading-relaxed text-text-muted">
+          Morse potential, Velocity Verlet integration, and Berendsen thermostat tuned for an interactive research-style workflow.
+        </p>
       </div>
     </aside>
   )

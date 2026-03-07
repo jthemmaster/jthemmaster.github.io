@@ -12,45 +12,48 @@ export default function MobileHeader() {
   const temperature = useSimulationStore((s) => s.temperature)
 
   return (
-    <div className="md:hidden flex items-center justify-between h-12 px-3 bg-bg-surface/80 backdrop-blur-xl border-b border-border-subtle relative z-20">
-      {/* Left: hamburger + logo */}
+    <div className="relative z-20 flex h-14 items-center justify-between border-b border-white/[0.06] px-3 md:hidden">
       <div className="flex items-center gap-2">
         <button
           onClick={toggleSidebar}
-          className="w-9 h-9 flex items-center justify-center rounded-lg text-text-secondary hover:text-text-primary hover:bg-white/[0.05] transition-colors"
+          className="panel-soft panel-soft-hover flex h-10 w-10 items-center justify-center rounded-xl text-text-secondary hover:text-text-primary"
         >
           <Menu size={18} />
         </button>
-        <Logo size="sm" />
+        <div>
+          <Logo size="sm" />
+          <div className="mt-0.5 text-[10px] uppercase tracking-[0.18em] text-text-muted">
+            Molecular workspace
+          </div>
+        </div>
       </div>
 
-      {/* Center: quick play/pause + temp */}
       <div className="flex items-center gap-2">
         <button
           onClick={isRunning ? stop : start}
           disabled={!isInitialized}
           className={`
-            w-8 h-8 flex items-center justify-center rounded-full transition-all
+            flex h-10 items-center gap-2 rounded-xl border px-3 text-[11px] font-medium uppercase tracking-[0.16em] transition-all
             ${isRunning
-              ? 'bg-gradient-to-r from-accent-purple to-accent-blue text-white shadow-lg shadow-accent-purple/30'
-              : 'glass text-text-secondary hover:text-text-primary'
+              ? 'border-white/14 bg-white/[0.08] text-text-primary'
+              : 'border-white/[0.08] bg-white/[0.04] text-text-secondary hover:text-text-primary'
             }
             ${!isInitialized ? 'opacity-40' : ''}
           `}
         >
           {isRunning ? <Pause size={14} /> : <Play size={14} />}
+          <span>{isRunning ? 'Pause' : 'Run'}</span>
         </button>
-        {isInitialized && (
-          <span className="text-[11px] font-mono text-text-muted tabular-nums">
+        {isInitialized && temperature > 0 && (
+          <span className="hidden text-[11px] font-mono text-text-muted tabular-nums sm:inline">
             {isNaN(temperature) ? '—' : `${temperature.toFixed(0)} K`}
           </span>
         )}
       </div>
 
-      {/* Right: stats toggle */}
       <button
         onClick={toggleStatsPanel}
-        className="w-9 h-9 flex items-center justify-center rounded-lg text-text-secondary hover:text-text-primary hover:bg-white/[0.05] transition-colors"
+        className="panel-soft panel-soft-hover flex h-10 w-10 items-center justify-center rounded-xl text-text-secondary hover:text-text-primary"
       >
         <BarChart3 size={18} />
       </button>

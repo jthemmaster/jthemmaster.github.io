@@ -50,65 +50,60 @@ function App() {
   }, [isRunning, isInitialized, start, stop, singleStep, reset])
 
   return (
-    <div className="w-full h-full flex flex-col bg-bg-primary relative overflow-hidden">
-      {/* Subtle mesh gradient background */}
+    <div className="relative h-full w-full overflow-hidden bg-bg-primary">
       <div className="mesh-gradient" />
 
-      {/* Mobile header — visible only on small screens */}
-      <MobileHeader />
+      <div className="relative z-10 h-full p-3 md:p-5">
+        <div className="site-shell flex h-full min-h-0 flex-col overflow-hidden rounded-[28px] border border-white/[0.08]">
+          <MobileHeader />
 
-      {/* Main content area */}
-      <div className="flex-1 flex min-h-0 relative z-10">
-        {/* Sidebar — fixed on desktop, overlay on mobile */}
-        <div className="hidden md:block">
-          <Sidebar />
-        </div>
-
-        {/* Mobile sidebar overlay */}
-        {sidebarOpen && (
-          <div
-            className="fixed inset-0 z-40 md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-            <div
-              className="absolute left-0 top-0 bottom-0 w-[300px] max-w-[85vw] animate-slide-in-left"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Sidebar onClose={() => setSidebarOpen(false)} />
+          <div className="relative flex min-h-0 flex-1">
+            <div className="hidden md:block">
+              <Sidebar />
             </div>
-          </div>
-        )}
 
-        {/* Center: 3D viewer */}
-        <main className="flex-1 min-w-0 relative">
-          <MolecularViewer />
-        </main>
+            {sidebarOpen && (
+              <div
+                className="fixed inset-0 z-40 md:hidden"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <div className="absolute inset-0 bg-black/70 backdrop-blur-md" />
+                <div
+                  className="absolute left-0 top-0 bottom-0 w-[300px] max-w-[88vw] animate-slide-in-left"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Sidebar onClose={() => setSidebarOpen(false)} />
+                </div>
+              </div>
+            )}
 
-        {/* Stats panel — fixed on desktop, overlay on mobile */}
-        <div className="hidden md:block">
-          <StatsPanel />
-        </div>
+            <main className="relative min-w-0 flex-1">
+              <MolecularViewer />
+            </main>
 
-        {/* Mobile stats overlay */}
-        {statsPanelOpen && (
-          <div
-            className="fixed inset-0 z-40 md:hidden"
-            onClick={() => setStatsPanelOpen(false)}
-          >
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-            <div
-              className="absolute right-0 top-0 bottom-0 w-[300px] max-w-[85vw] animate-slide-in-right"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <StatsPanel mobile />
+            <div className="hidden md:block">
+              <StatsPanel />
             </div>
+
+            {statsPanelOpen && (
+              <div
+                className="fixed inset-0 z-40 md:hidden"
+                onClick={() => setStatsPanelOpen(false)}
+              >
+                <div className="absolute inset-0 bg-black/70 backdrop-blur-md" />
+                <div
+                  className="absolute right-0 top-0 bottom-0 w-[320px] max-w-[88vw] animate-slide-in-right"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <StatsPanel mobile />
+                </div>
+              </div>
+            )}
           </div>
-        )}
+
+          <StatusBar />
+        </div>
       </div>
-
-      {/* Bottom status bar */}
-      <StatusBar />
     </div>
   )
 }

@@ -7,7 +7,7 @@ export default function TemperatureSlider() {
   const updateConfig = useSimulationStore((s) => s.updateConfig)
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-2">
       <Slider
         label="Target Temperature"
         value={targetTemp}
@@ -19,10 +19,10 @@ export default function TemperatureSlider() {
         onChange={(v) => updateConfig({ targetTemp: v })}
         formatValue={(v) => v.toFixed(0)}
       />
-      <div className="flex items-center justify-between px-1">
-        <span className="text-[10px] text-text-muted">Current</span>
-        <span className="text-[10px] font-mono text-text-secondary tabular-nums">
-          {currentTemp.toFixed(0)} K
+      <div className="flex items-center justify-between rounded-xl border border-white/[0.05] bg-white/[0.02] px-3 py-2">
+        <span className="text-[11px] text-text-muted">Current temperature</span>
+        <span className="text-[11px] font-mono text-text-secondary tabular-nums">
+          {isNaN(currentTemp) ? '—' : currentTemp.toFixed(0)} K
         </span>
       </div>
     </div>
